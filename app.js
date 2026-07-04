@@ -2,7 +2,7 @@ let questions=[];let lastResultText='';
 function cfg(k,f){return (window.QUIZ_CONFIG&&window.QUIZ_CONFIG[k])||f}
 function esc(s){return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')}
 function norm(s){return String(s).trim().toLowerCase().replace(/\s+/g,'')}
-async function loadQuestions(){try{let r=await fetch('questions.json',{cache:'no-store'});questions=await r.json();render()}catch(e){document.getElementById('quizContainer').innerHTML='<p class="note">Could not load questions.</p>'}}
+async function loadQuestions(){try{let r=await fetch('questions.json?v='+Date.now(),{cache:'reload'});questions=await r.json();render()}catch(e){document.getElementById('quizContainer').innerHTML='<p class="note">Could not load questions.</p>'}}
 function render(){let c=document.getElementById('quizContainer');c.innerHTML='';questions.forEach((q,i)=>{let ans='';if(q.type==='input'){ans='<label>Your answer</label><input type="text" id="answer-'+i+'">'}else{ans=(q.options||[]).map((o,j)=>'<label class="option"><input type="radio" name="answer-'+i+'" value="'+esc(o)+'"> '+String.fromCharCode(65+j)+'. '+esc(o)+'</label>').join('')}c.innerHTML+='<div class="question"><h2>Question '+(i+1)+'</h2><p>'+esc(q.question)+'</p>'+ans+'<div id="feedback-'+i+'" class="feedback"></div></div>'})}
 function getAnswer(i){let q=questions[i];if(q.type==='input')return document.getElementById('answer-'+i).value;let x=document.querySelector('input[name="answer-'+i+'"]:checked');return x?x.value:''}
 function isCorrect(a,b){return norm(a)===norm(b)}
