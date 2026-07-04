@@ -1,0 +1,22 @@
+[
+  {"type":"mcq","question":"What is chemistry mainly the study of?","options":["Matter and its changes","Planets only","Grammar rules","Computer coding only"],"answer":"Matter and its changes","explanation":"Chemistry studies matter, its properties, and how it changes."},
+  {"type":"mcq","question":"Which particle has a positive charge?","options":["Proton","Neutron","Electron","Molecule"],"answer":"Proton","explanation":"A proton has a positive charge."},
+  {"type":"mcq","question":"Which particle has a negative charge?","options":["Proton","Neutron","Electron","Atom"],"answer":"Electron","explanation":"An electron has a negative charge."},
+  {"type":"input","question":"What is the chemical symbol for oxygen?","answer":"O","explanation":"Oxygen's chemical symbol is O."},
+  {"type":"input","question":"What is the chemical symbol for hydrogen?","answer":"H","explanation":"Hydrogen's chemical symbol is H."},
+  {"type":"mcq","question":"Which state of matter has a fixed shape and fixed volume?","options":["Solid","Liquid","Gas","Plasma"],"answer":"Solid","explanation":"A solid keeps both its shape and volume."},
+  {"type":"mcq","question":"Which state of matter takes the shape of its container but has a fixed volume?","options":["Solid","Liquid","Gas","Vacuum"],"answer":"Liquid","explanation":"A liquid flows to take the container's shape but keeps its volume."},
+  {"type":"mcq","question":"Which state of matter spreads out to fill the whole container?","options":["Solid","Liquid","Gas","Ice"],"answer":"Gas","explanation":"A gas expands to fill its container."},
+  {"type":"input","question":"Water is made of hydrogen and oxygen. What is the formula for water?","answer":"H2O","explanation":"Water has two hydrogen atoms and one oxygen atom, so its formula is H2O."},
+  {"type":"mcq","question":"Which is an example of a chemical change?","options":["Ice melting","Paper burning","Water freezing","Sugar dissolving"],"answer":"Paper burning","explanation":"Burning creates new substances, so it is a chemical change."},
+  {"type":"mcq","question":"Which is an example of a physical change?","options":["Rusting iron","Burning wood","Melting ice","Cooking an egg"],"answer":"Melting ice","explanation":"Melting changes state but does not create a new substance."},
+  {"type":"input","question":"How many atoms are in one molecule of CO2?","answer":"3","explanation":"CO2 has one carbon atom and two oxygen atoms, for a total of 3 atoms."},
+  {"type":"mcq","question":"Which number on the periodic table tells the number of protons?","options":["Atomic number","Mass only","Group number only","Boiling point"],"answer":"Atomic number","explanation":"The atomic number equals the number of protons in an atom."},
+  {"type":"mcq","question":"Which material is usually an acid?","options":["Lemon juice","Soap","Baking soda solution","Pure water only"],"answer":"Lemon juice","explanation":"Lemon juice contains citric acid."},
+  {"type":"mcq","question":"Which pH value is acidic?","options":["2","7","10","14"],"answer":"2","explanation":"Acids have pH values less than 7."},
+  {"type":"mcq","question":"Which pH value is neutral?","options":["1","4","7","12"],"answer":"7","explanation":"Pure water is neutral at about pH 7."},
+  {"type":"input","question":"What is the name of the process when a liquid changes into a gas?","answer":"evaporation","explanation":"Evaporation is when liquid particles become gas."},
+  {"type":"input","question":"What is the name of the process when a gas changes into a liquid?","answer":"condensation","explanation":"Condensation is when gas cools and becomes liquid."},
+  {"type":"mcq","question":"Which mixture can be separated with a filter?","options":["Sand and water","Salt dissolved in water","Sugar dissolved in tea","Air"],"answer":"Sand and water","explanation":"A filter can trap the sand while water passes through."},
+  {"type":"mcq","question":"In a balanced chemical equation, what is conserved?","options":["Atoms","Only color","Only smell","Only temperature"],"answer":"Atoms","explanation":"A balanced equation has the same number of each type of atom on both sides."}
+]
