@@ -1,1 +1,163 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><title>Shayan Quiz Dashboard</title><link rel="stylesheet" href="style.css"><style>.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}.subject{background:white;border:1px solid #ddd;border-radius:16px;padding:20px;box-shadow:0 8px 25px #0001}.subject h2{margin-top:0}.subject p{color:#4b5563}.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px}.metric{background:white;border:1px solid #ddd;border-radius:16px;padding:16px;text-align:center}.metric strong{font-size:30px;display:block}.bar{height:14px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin:10px 0}.fill{height:100%;background:#2563eb;width:0%}.status{font-weight:700}.pending{color:#b45309}.done{color:#047857}.small{font-size:13px;color:#6b7280}.fixed{border:2px solid #047857}.chart{background:white;border:1px solid #ddd;border-radius:16px;padding:18px;margin:18px 0;box-shadow:0 8px 25px #0001}.chart svg{width:100%;height:260px}.history-row{display:flex;gap:10px;justify-content:space-between;border-bottom:1px solid #eee;padding:8px 0;font-size:14px}.empty{color:#6b7280;font-style:italic}</style><script>if(location.pathname.endsWith('/index.html')){history.replaceState(null,'','/Shayan-quiz-agent/')}</script></head><body><header><h1>Shayan Quiz Dashboard</h1><p>Choose a subject. All quizzes run in Test Mode: answers are hidden until submission.</p><p class="small"><b>Dashboard version:</b> Math law of indices added</p></header><main><section class="summary"><div class="metric fixed"><strong id="completedCount">0</strong><span>Completed</span></div><div class="metric fixed"><strong id="pendingCount">4</strong><span>Pending</span></div><div class="metric fixed"><strong id="averageScore">0%</strong><span>Average Score</span></div></section><section class="grid" id="subjectGrid"></section><section class="chart"><h2>Score History Graph</h2><p class="small">This graph shows each submitted test attempt in order. Higher points mean better scores.</p><div id="historyGraph"></div><div id="historyList"></div></section><section class="panel"><h2>How to read the progress bar</h2><p>The progress bar shows Shayan's latest score percentage for that subject. Example: 16 out of 20 = 80%, so the bar fills to 80%.</p><p class="small">Progress and history are saved in this browser on this device. If Shayan uses another device or clears browser data, this dashboard may not show previous attempts. Email and WhatsApp results still work separately.</p><button class="secondary" onclick="resetProgress()">Reset Local Progress</button> <a class="button secondary" href="test-email.html">Test Email</a></section></main><footer>Shayan quiz system</footer><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}const SUBJECTS=[{id:'math',title:'Math',desc:'Law of indices: product, quotient, power, zero, negative and fractional index laws. Test Mode only.',url:'math.html'},{id:'physics',title:'Physics',desc:'Forces, energy, waves, circuits, and motion. Test Mode only.',url:'physics.html'},{id:'chemistry',title:'Chemistry',desc:'Grade 9 elements and periodic table. Test Mode only, shuffled questions, and revision advice.',url:'chemistry.html'},{id:'biology',title:'Biology',desc:'Cells, body systems, genetics, and ecosystems. Test Mode only.',url:'biology.html'}];const KEY='shayanQuizProgress';function loadProgress(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}function bar(p){return '<div class="bar"><div class="fill" style="width:'+Math.max(0,Math.min(100,p||0))+'%"></div></div>'}function subjectTitle(id){let s=SUBJECTS.find(x=>x.id===id);return s?s.title:id}function getAttempts(p){let out=[];SUBJECTS.forEach(s=>{let r=p[s.id];if(!r)return;let h=Array.isArray(r.history)?r.history:[];if(h.length){h.forEach(a=>out.push({...a,subjectId:s.id,title:s.title}))}else if(r.completed){out.push({...r,subjectId:s.id,title:s.title,ts:0})}});return out.sort((a,b)=>(a.ts||0)-(b.ts||0))}function renderHistory(attempts){let g=document.getElementById('historyGraph'),list=document.getElementById('historyList');if(!attempts.length){g.innerHTML='<p class="empty">No historical results yet. After Shayan submits tests, scores will appear here.</p>';list.innerHTML='';return}let w=760,h=240,pad=36,max=100,min=0;let pts=attempts.map((a,i)=>{let x=pad+(attempts.length===1?0.5:(i/(attempts.length-1)))*(w-2*pad);let y=h-pad-((Number(a.percentage)||0-min)/(max-min))*(h-2*pad);return {x,y,a,i}});let circles=pts.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="5"><title>'+subjectTitle(p.a.subjectId)+': '+p.a.percentage+'% on '+(p.a.submittedAt||'')+'</title></circle>').join('');let labels=pts.map(p=>'<text x="'+p.x+'" y="'+(h-8)+'" text-anchor="middle" font-size="11">'+(p.i+1)+'</text>').join('');g.innerHTML='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Score history graph"><line x1="'+pad+'" y1="'+pad+'" x2="'+pad+'" y2="'+(h-pad)+'" stroke="#9ca3af"/><line x1="'+pad+'" y1="'+(h-pad)+'" x2="'+(w-pad)+'" y2="'+(h-pad)+'" stroke="#9ca3af"/><text x="6" y="'+(pad+4)+'" font-size="12">100%</text><text x="12" y="'+(h-pad)+'" font-size="12">0%</text><polyline points="'+pts.map(p=>p.x+','+p.y).join(' ')+'" fill="none" stroke="#2563eb" stroke-width="3"/><g fill="#2563eb">'+circles+'</g>'+labels+'</svg>';list.innerHTML='<h3>Attempt Details</h3>'+attempts.map((a,i)=>'<div class="history-row"><span>#'+(i+1)+' '+subjectTitle(a.subjectId)+'</span><b>'+a.percentage+'%</b><span>'+a.score+'/'+a.total+'</span><span class="small">'+(a.submittedAt||'')+'</span></div>').join('')}function render(){let p=loadProgress(),grid=document.getElementById('subjectGrid'),done=0,totalScore=0;grid.innerHTML='';SUBJECTS.forEach(s=>{let r=p[s.id],completed=!!(r&&r.completed);if(completed){done++;totalScore+=Number(r.percentage)||0}let pct=completed?Number(r.percentage)||0:0;let attempts=r&&Array.isArray(r.history)?r.history.length:(completed?1:0);grid.innerHTML+='<div class="subject"><h2>'+s.title+'</h2><p>'+s.desc+'</p><p class="status '+(completed?'done':'pending')+'">'+(completed?'Completed':'Pending')+'</p>'+bar(pct)+'<p><b>Latest score:</b> '+(completed?(r.score+'/'+r.total+' ('+pct+'%)'):'Not submitted yet')+'</p><p><b>Attempts:</b> '+attempts+'</p><p class="small">'+(completed?('Last submitted: '+r.submittedAt+'<br>Performance: '+r.performance):'This test is still pending.')+'</p><a class="button" href="'+s.url+'">Open '+s.title+' Test</a></div>'});document.getElementById('completedCount').textContent=done;document.getElementById('pendingCount').textContent=SUBJECTS.length-done;document.getElementById('averageScore').textContent=done?Math.round(totalScore/done)+'%':'0%';renderHistory(getAttempts(p))}function resetProgress(){if(confirm('Clear saved dashboard progress and history on this device?')){localStorage.removeItem(KEY);render()}}render();</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Shayan Learning Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root{--bg:#f4f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--blue:#2563eb;--green:#047857;--amber:#b45309;--red:#b91c1c;--purple:#7c3aed;--shadow:0 10px 28px rgba(15,23,42,.08)}
+    body{background:var(--bg);color:var(--text)}
+    header.hero{max-width:1100px;margin:0 auto 20px;padding:34px 20px 18px;text-align:left}
+    .hero-card{background:linear-gradient(135deg,#ffffff,#eef5ff);border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:var(--shadow)}
+    .hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:4px 0;color:var(--muted)}
+    main{max-width:1100px;margin:0 auto;padding:0 20px 40px}.topline{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.pill{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;color:#1e3a8a;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:700}
+    .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:18px 0}.metric{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}.metric span{color:var(--muted);font-size:13px}.metric strong{display:block;font-size:32px;line-height:1.1;margin-top:6px}.metric small{display:block;color:var(--muted);margin-top:6px}
+    .panel,.subject,.chart{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+    .section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:24px 0 12px}.section-title h2{margin:0}.section-title p{margin:0;color:var(--muted);font-size:14px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.subject h3{margin:0 0 8px;font-size:22px}.subject p{color:var(--muted)}.subject-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.badge{border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800}.badge.done{background:#ecfdf5;color:var(--green)}.badge.pending{background:#fffbeb;color:var(--amber)}.badge.review{background:#fef2f2;color:var(--red)}
+    .bar{height:14px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin:12px 0}.fill{height:100%;background:linear-gradient(90deg,#60a5fa,#2563eb);width:0%;transition:width .4s ease}.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.stat{background:#f9fafb;border:1px solid #eef2f7;border-radius:12px;padding:10px}.stat b{display:block}.stat span{font-size:12px;color:var(--muted)}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.button,a.button,button{border:0;border-radius:12px;background:var(--blue);color:white;padding:10px 14px;text-decoration:none;font-weight:800;cursor:pointer}.secondary{background:#eef2f7!important;color:#111827!important}.danger{background:#fee2e2!important;color:#991b1b!important}.button:hover,button:hover{filter:brightness(.97)}
+    .next-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.next-item{border:1px dashed #cbd5e1;border-radius:14px;padding:12px;background:#f8fafc}.next-item b{display:block}.next-item span{color:var(--muted);font-size:13px}
+    .chart{margin-top:16px}.chart-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters button{padding:8px 10px;background:#eef2f7;color:#111827}.filters button.active{background:var(--blue);color:white}.graph-wrap{overflow-x:auto}.chart svg{width:100%;min-width:620px;height:310px}.empty{color:var(--muted);font-style:italic;padding:22px;background:#f9fafb;border-radius:14px}.history-table{width:100%;border-collapse:collapse;margin-top:12px}.history-table th,.history-table td{border-bottom:1px solid var(--line);text-align:left;padding:10px;font-size:14px}.history-table th{color:var(--muted);font-size:12px;text-transform:uppercase}.small{font-size:13px;color:var(--muted)}
+    .legend{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}.legend span{font-size:12px;color:var(--muted)}.dot{display:inline-block;width:10px;height:10px;border-radius:999px;margin-right:5px;background:var(--blue)}
+    footer{text-align:center;color:var(--muted);padding:20px}
+    @media(max-width:640px){.hero h1{font-size:26px}.stats{grid-template-columns:1fr}.history-table{display:block;overflow-x:auto}.metric strong{font-size:26px}}
+  </style>
+  <script>if(location.pathname.endsWith('/index.html')){history.replaceState(null,'','/Shayan-quiz-agent/')}</script>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-card">
+      <h1>Shayan Learning Dashboard</h1>
+      <p>Track tests, pending subjects, latest scores, and score history in one place.</p>
+      <div class="topline">
+        <span class="pill">Test Mode only</span>
+        <span class="pill">Answers hidden until submit</span>
+        <span class="pill">Email + WhatsApp results</span>
+        <span class="pill">Dashboard version: improved dashboard</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="summary">
+      <div class="metric"><span>Completed tests</span><strong id="completedCount">0</strong><small id="completedHelp">out of 4</small></div>
+      <div class="metric"><span>Pending tests</span><strong id="pendingCount">4</strong><small id="pendingHelp">waiting for submission</small></div>
+      <div class="metric"><span>Average latest score</span><strong id="averageScore">0%</strong><small>completed tests only</small></div>
+      <div class="metric"><span>Best subject</span><strong id="bestSubject">—</strong><small id="bestScore">no score yet</small></div>
+      <div class="metric"><span>Total attempts</span><strong id="totalAttempts">0</strong><small>saved on this device</small></div>
+    </section>
+
+    <section class="panel" id="nextPanel">
+      <div class="section-title"><h2>Next tests to complete</h2><p>Pending subjects appear here</p></div>
+      <div class="next-list" id="nextList"></div>
+    </section>
+
+    <div class="section-title"><h2>Subject status</h2><p>Latest score and attempt count for each subject</p></div>
+    <section class="grid" id="subjectGrid"></section>
+
+    <section class="chart">
+      <div class="chart-head">
+        <div><h2>Score history graph</h2><p class="small">Each point is a submitted attempt. Use the filters to view one subject.</p></div>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="legend" id="legend"></div>
+      <div class="graph-wrap"><div id="historyGraph"></div></div>
+      <div id="historyList"></div>
+    </section>
+
+    <section class="panel" style="margin-top:18px">
+      <h2>How to read this dashboard</h2>
+      <p>The progress bar shows Shayan's <b>latest score percentage</b> for that subject. Example: 16 out of 20 = 80%, so the bar fills to 80%.</p>
+      <p class="small">Progress and history are saved in this browser on this device. If Shayan uses another device or clears browser data, this dashboard may not show previous attempts. Email and WhatsApp results still work separately.</p>
+      <div class="actions"><button class="secondary" onclick="copySummary()">Copy progress summary</button><button class="danger" onclick="resetProgress()">Reset local progress</button><a class="button secondary" href="test-email.html">Test Email</a></div>
+    </section>
+  </main>
+
+  <footer>Shayan quiz system</footer>
+
+  <script>
+    if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+    const SUBJECTS=[
+      {id:'math',title:'Math',desc:'Law of indices: product, quotient, power, zero, negative and fractional index laws.',url:'math.html',color:'#2563eb'},
+      {id:'physics',title:'Physics',desc:'Forces, energy, waves, circuits, and motion.',url:'physics.html',color:'#7c3aed'},
+      {id:'chemistry',title:'Chemistry',desc:'Grade 9 elements and periodic table with shuffled questions and revision advice.',url:'chemistry.html',color:'#047857'},
+      {id:'biology',title:'Biology',desc:'Cells, body systems, genetics, and ecosystems.',url:'biology.html',color:'#b45309'}
+    ];
+    const KEY='shayanQuizProgress';
+    let activeSubject='all';
+
+    function loadProgress(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+    function clamp(n){return Math.max(0,Math.min(100,Number(n)||0))}
+    function subjectTitle(id){let s=SUBJECTS.find(x=>x.id===id);return s?s.title:id}
+    function subjectColor(id){let s=SUBJECTS.find(x=>x.id===id);return s?s.color:'#2563eb'}
+    function latest(r){return r&&r.completed?r:null}
+    function getAttempts(p){let out=[];SUBJECTS.forEach(s=>{let r=p[s.id];if(!r)return;let h=Array.isArray(r.history)?r.history:[];if(h.length){h.forEach(a=>out.push({...a,subjectId:s.id,title:s.title}))}else if(r.completed){out.push({...r,subjectId:s.id,title:s.title,ts:0})}});return out.sort((a,b)=>(a.ts||0)-(b.ts||0))}
+    function performanceClass(pct){pct=Number(pct)||0;if(pct>=75)return 'done';if(pct>=60)return 'pending';return 'review'}
+    function bar(p,color){return '<div class="bar"><div class="fill" style="width:'+clamp(p)+'%;background:linear-gradient(90deg,'+color+'99,'+color+')"></div></div>'}
+
+    function renderSummary(p,attempts){
+      let completed=0,totalScore=0,best=null;
+      SUBJECTS.forEach(s=>{let r=latest(p[s.id]);if(r){completed++;totalScore+=Number(r.percentage)||0;if(!best||Number(r.percentage)>Number(best.percentage))best={...r,title:s.title}}});
+      document.getElementById('completedCount').textContent=completed;
+      document.getElementById('pendingCount').textContent=SUBJECTS.length-completed;
+      document.getElementById('averageScore').textContent=completed?Math.round(totalScore/completed)+'%':'0%';
+      document.getElementById('bestSubject').textContent=best?best.title:'—';
+      document.getElementById('bestScore').textContent=best?best.percentage+'% latest score':'no score yet';
+      document.getElementById('totalAttempts').textContent=attempts.length;
+    }
+
+    function renderNext(p){
+      let pending=SUBJECTS.filter(s=>!(p[s.id]&&p[s.id].completed));
+      let box=document.getElementById('nextList');
+      if(!pending.length){box.innerHTML='<div class="next-item"><b>All tests completed</b><span>Great work. Shayan can retake any test to improve scores and build history.</span></div>';return}
+      box.innerHTML=pending.map(s=>'<div class="next-item"><b>'+s.title+'</b><span>'+s.desc+'</span><div class="actions"><a class="button" href="'+s.url+'">Start '+s.title+'</a></div></div>').join('');
+    }
+
+    function renderSubjects(p){
+      let grid=document.getElementById('subjectGrid');grid.innerHTML='';
+      SUBJECTS.forEach(s=>{
+        let r=latest(p[s.id]);let done=!!r;let pct=done?clamp(r.percentage):0;let attempts=p[s.id]&&Array.isArray(p[s.id].history)?p[s.id].history.length:(done?1:0);let badge=done?(pct>=60?'Completed':'Needs review'):'Pending';let cls=done?performanceClass(pct):'pending';
+        grid.innerHTML+='<div class="subject"><div class="subject-top"><h3>'+s.title+'</h3><span class="badge '+cls+'">'+badge+'</span></div><p>'+s.desc+'</p>'+bar(pct,s.color)+'<div class="stats"><div class="stat"><b>'+(done?(r.score+'/'+r.total):'—')+'</b><span>Latest score</span></div><div class="stat"><b>'+(done?(pct+'%'):'0%')+'</b><span>Progress bar</span></div><div class="stat"><b>'+attempts+'</b><span>Attempts</span></div><div class="stat"><b>'+(done?r.performance:'Not started')+'</b><span>Performance</span></div></div><p class="small">'+(done?('Last submitted: '+r.submittedAt):'This test is still pending.')+'</p><div class="actions"><a class="button" href="'+s.url+'">'+(done?'Retake':'Start')+' '+s.title+'</a></div></div>';
+      });
+    }
+
+    function renderFilters(){
+      let f=document.getElementById('filters');
+      let buttons=['all',...SUBJECTS.map(s=>s.id)];
+      f.innerHTML=buttons.map(id=>'<button class="'+(activeSubject===id?'active':'')+'" onclick="setFilter(\''+id+'\')">'+(id==='all'?'All':subjectTitle(id))+'</button>').join('');
+      let legend=document.getElementById('legend');
+      legend.innerHTML=SUBJECTS.map(s=>'<span><i class="dot" style="background:'+s.color+'"></i>'+s.title+'</span>').join('');
+    }
+    function setFilter(id){activeSubject=id;render()}
+
+    function renderHistory(allAttempts){
+      renderFilters();
+      let attempts=activeSubject==='all'?allAttempts:allAttempts.filter(a=>a.subjectId===activeSubject);
+      let g=document.getElementById('historyGraph'),list=document.getElementById('historyList');
+      if(!attempts.length){g.innerHTML='<p class="empty">No historical results yet for this view. After Shayan submits tests, scores will appear here.</p>';list.innerHTML='';return}
+      let w=860,h=300,pad=44;let pts=attempts.map((a,i)=>{let x=pad+(attempts.length===1?0.5:(i/(attempts.length-1)))*(w-2*pad);let y=h-pad-(clamp(a.percentage)/100)*(h-2*pad);return {x,y,a,i}});
+      let gridLines=[0,25,50,75,100].map(v=>{let y=h-pad-(v/100)*(h-2*pad);return '<line x1="'+pad+'" y1="'+y+'" x2="'+(w-pad)+'" y2="'+y+'" stroke="#e5e7eb"/><text x="8" y="'+(y+4)+'" font-size="12" fill="#6b7280">'+v+'%</text>'}).join('');
+      let lines=activeSubject==='all'?SUBJECTS.map(s=>{let sp=pts.filter(p=>p.a.subjectId===s.id);if(!sp.length)return '';return '<polyline points="'+sp.map(p=>p.x+','+p.y).join(' ')+'" fill="none" stroke="'+s.color+'" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'}).join(''):'<polyline points="'+pts.map(p=>p.x+','+p.y).join(' ')+'" fill="none" stroke="'+subjectColor(activeSubject)+'" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
+      let circles=pts.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="6" fill="'+subjectColor(p.a.subjectId)+'"><title>'+subjectTitle(p.a.subjectId)+': '+p.a.percentage+'% on '+(p.a.submittedAt||'')+'</title></circle>').join('');
+      let labels=pts.map(p=>'<text x="'+p.x+'" y="'+(h-10)+'" text-anchor="middle" font-size="11" fill="#6b7280">'+(p.i+1)+'</text>').join('');
+      g.innerHTML='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Score history graph">'+gridLines+'<line x1="'+pad+'" y1="'+pad+'" x2="'+pad+'" y2="'+(h-pad)+'" stroke="#9ca3af"/><line x1="'+pad+'" y1="'+(h-pad)+'" x2="'+(w-pad)+'" y2="'+(h-pad)+'" stroke="#9ca3af"/>'+lines+circles+labels+'</svg>';
+      let recent=[...attempts].reverse().slice(0,10);
+      list.innerHTML='<h3>Recent attempts</h3><table class="history-table"><thead><tr><th>#</th><th>Subject</th><th>Score</th><th>Percent</th><th>Performance</th><th>Submitted</th></tr></thead><tbody>'+recent.map((a,i)=>'<tr><td>'+(recent.length-i)+'</td><td>'+subjectTitle(a.subjectId)+'</td><td>'+a.score+'/'+a.total+'</td><td><b>'+a.percentage+'%</b></td><td>'+a.performance+'</td><td>'+(a.submittedAt||'')+'</td></tr>').join('')+'</tbody></table>';
+    }
+
+    function copySummary(){
+      let p=loadProgress();let lines=['Shayan quiz progress summary'];
+      SUBJECTS.forEach(s=>{let r=latest(p[s.id]);lines.push(s.title+': '+(r?(r.score+'/'+r.total+' ('+r.percentage+'%) - '+r.performance):'Pending'))});
+      navigator.clipboard&&navigator.clipboard.writeText(lines.join('\n')).then(()=>alert('Progress summary copied.')).catch(()=>alert(lines.join('\n')));
+    }
+    function resetProgress(){if(confirm('Clear saved dashboard progress and history on this device?')){localStorage.removeItem(KEY);render()}}
+    function render(){let p=loadProgress();let attempts=getAttempts(p);renderSummary(p,attempts);renderNext(p);renderSubjects(p);renderHistory(attempts)}
+    render();
+  </script>
+</body>
+</html>
