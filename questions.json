@@ -1,128 +1,134 @@
 [
   {
-    "type": "input",
-    "question": "Solve: 2x + 5 = 17. What is x?",
-    "answer": "6",
-    "explanation": "Subtract 5 from both sides: 2x = 12. Divide by 2: x = 6."
+    "type": "mcq",
+    "question": "What is physics mainly the study of?",
+    "options": ["Living things", "Matter, energy, motion, and forces", "Ancient history", "Spelling rules"],
+    "answer": "Matter, energy, motion, and forces",
+    "explanation": "Physics studies matter and energy and how objects move and interact through forces."
   },
   {
     "type": "input",
-    "question": "Solve: 4a - 9 = 23. What is a?",
-    "answer": "8",
-    "explanation": "Add 9 to both sides: 4a = 32. Divide by 4: a = 8."
+    "question": "A car travels 120 km in 2 hours. What is its average speed in km/h?",
+    "answer": "60",
+    "explanation": "Average speed = distance divided by time = 120 divided by 2 = 60 km/h."
   },
   {
     "type": "mcq",
-    "question": "Which expression is equivalent to 3(2x + 7)?",
-    "options": ["6x + 7", "5x + 21", "6x + 21", "3x + 14"],
-    "answer": "6x + 21",
-    "explanation": "Use the distributive property: 3 times 2x is 6x, and 3 times 7 is 21."
+    "question": "Which unit is used to measure force?",
+    "options": ["Newton", "Metre", "Second", "Kilogram"],
+    "answer": "Newton",
+    "explanation": "Force is measured in newtons, written as N."
   },
   {
     "type": "input",
-    "question": "Simplify: 5x + 3x - 2.",
-    "answer": "8x-2",
-    "explanation": "Combine like terms: 5x + 3x = 8x. The simplified expression is 8x - 2."
-  },
-  {
-    "type": "input",
-    "question": "Simplify: 7y - 2y + 10.",
-    "answer": "5y+10",
-    "explanation": "Combine like terms: 7y - 2y = 5y. The simplified expression is 5y + 10."
+    "question": "A force of 10 N pushes an object 3 m in the same direction. How much work is done in joules?",
+    "answer": "30",
+    "explanation": "Work = force times distance = 10 N times 3 m = 30 J."
   },
   {
     "type": "mcq",
-    "question": "What is the value of 3x - 4 when x = 6?",
-    "options": ["10", "14", "18", "22"],
-    "answer": "14",
-    "explanation": "Substitute x = 6: 3 times 6 minus 4 = 18 - 4 = 14."
+    "question": "Which statement best describes friction?",
+    "options": ["A force that always speeds objects up", "A force that opposes motion between surfaces", "A type of light", "A measure of temperature"],
+    "answer": "A force that opposes motion between surfaces",
+    "explanation": "Friction acts between surfaces and usually slows or resists motion."
   },
   {
     "type": "input",
-    "question": "Evaluate 2p + 9 when p = 8.",
-    "answer": "25",
-    "explanation": "Substitute p = 8: 2 times 8 + 9 = 16 + 9 = 25."
-  },
-  {
-    "type": "input",
-    "question": "Solve: x/3 + 4 = 10. What is x?",
-    "answer": "18",
-    "explanation": "Subtract 4 from both sides: x/3 = 6. Multiply by 3: x = 18."
+    "question": "An object has a mass of 5 kg. Using g = 10 N/kg, what is its weight in newtons?",
+    "answer": "50",
+    "explanation": "Weight = mass times gravitational field strength = 5 times 10 = 50 N."
   },
   {
     "type": "mcq",
-    "question": "Which expression represents 'five more than twice a number n'?",
-    "options": ["5n + 2", "2n + 5", "2(n + 5)", "n/2 + 5"],
-    "answer": "2n + 5",
-    "explanation": "Twice a number n is 2n. Five more means add 5, so the expression is 2n + 5."
-  },
-  {
-    "type": "input",
-    "question": "Solve: 6m = 42. What is m?",
-    "answer": "7",
-    "explanation": "Divide both sides by 6: m = 7."
-  },
-  {
-    "type": "input",
-    "question": "Solve: 9 - x = 2. What is x?",
-    "answer": "7",
-    "explanation": "9 - x = 2 means x must be 7 because 9 - 7 = 2."
+    "question": "Which type of energy does a moving bicycle have?",
+    "options": ["Kinetic energy", "Chemical energy only", "Sound energy only", "Nuclear energy"],
+    "answer": "Kinetic energy",
+    "explanation": "Objects that are moving have kinetic energy."
   },
   {
     "type": "mcq",
-    "question": "Which is the first step to solve 5x + 6 = 31?",
-    "options": ["Add 6", "Subtract 6", "Divide by 5", "Multiply by 5"],
-    "answer": "Subtract 6",
-    "explanation": "Undo addition first. Subtract 6 from both sides to get 5x = 25."
+    "question": "What happens to the particles of most substances when they are heated?",
+    "options": ["They move more slowly", "They stop moving", "They move faster", "They disappear"],
+    "answer": "They move faster",
+    "explanation": "Heating gives particles more energy, so they usually move or vibrate faster."
   },
   {
     "type": "input",
-    "question": "Solve: 3(x + 2) = 21. What is x?",
+    "question": "A wave has a frequency of 5 Hz. How many waves pass a point in 1 second?",
     "answer": "5",
-    "explanation": "Divide both sides by 3: x + 2 = 7. Subtract 2: x = 5."
-  },
-  {
-    "type": "input",
-    "question": "Simplify: 4(3x - 2).",
-    "answer": "12x-8",
-    "explanation": "Distribute 4: 4 times 3x is 12x, and 4 times -2 is -8."
+    "explanation": "Frequency means the number of waves per second. 5 Hz means 5 waves each second."
   },
   {
     "type": "mcq",
-    "question": "What is the coefficient in the term -7x?",
-    "options": ["7", "-7", "x", "0"],
-    "answer": "-7",
-    "explanation": "The coefficient is the number multiplying the variable. In -7x, the coefficient is -7."
+    "question": "Which material is usually a good electrical conductor?",
+    "options": ["Rubber", "Plastic", "Copper", "Wood"],
+    "answer": "Copper",
+    "explanation": "Copper is a metal, and metals usually conduct electricity well."
   },
   {
     "type": "input",
-    "question": "Solve: x - 12 = -3. What is x?",
-    "answer": "9",
-    "explanation": "Add 12 to both sides: x = 9."
-  },
-  {
-    "type": "input",
-    "question": "Solve: 2x - 3 = x + 8. What is x?",
-    "answer": "11",
-    "explanation": "Subtract x from both sides: x - 3 = 8. Add 3: x = 11."
+    "question": "In a circuit, the current is 2 A and the resistance is 6 ohms. What is the voltage in volts?",
+    "answer": "12",
+    "explanation": "Using V = I times R, voltage = 2 times 6 = 12 V."
   },
   {
     "type": "mcq",
-    "question": "Which expression is simplified correctly?",
-    "options": ["2x + 3x = 5x", "2x + 3 = 5x", "x + x = x", "4x - x = 4"],
-    "answer": "2x + 3x = 5x",
-    "explanation": "Only like terms can be combined. 2x + 3x = 5x is correct."
+    "question": "Which device changes electrical energy into light energy?",
+    "options": ["Lamp", "Spring", "Magnet", "Thermometer"],
+    "answer": "Lamp",
+    "explanation": "A lamp changes electrical energy into light energy and some heat."
+  },
+  {
+    "type": "mcq",
+    "question": "What is the law of reflection?",
+    "options": ["Light always bends away from glass", "The angle of incidence equals the angle of reflection", "Light cannot travel in air", "Mirrors absorb all light"],
+    "answer": "The angle of incidence equals the angle of reflection",
+    "explanation": "When light reflects from a smooth surface, the incoming angle equals the reflected angle."
   },
   {
     "type": "input",
-    "question": "A number increased by 9 is 26. Let the number be x. Solve for x.",
-    "answer": "17",
-    "explanation": "The equation is x + 9 = 26. Subtract 9 from both sides: x = 17."
+    "question": "A machine does 200 J of work in 4 seconds. What is its power in watts?",
+    "answer": "50",
+    "explanation": "Power = work divided by time = 200 divided by 4 = 50 W."
+  },
+  {
+    "type": "mcq",
+    "question": "Which simple machine is a ramp?",
+    "options": ["Pulley", "Lever", "Inclined plane", "Wheel and axle"],
+    "answer": "Inclined plane",
+    "explanation": "A ramp is an inclined plane. It helps move objects to a higher or lower level with less force."
   },
   {
     "type": "input",
-    "question": "The expression 4x + 3 has a value of 35. What is x?",
-    "answer": "8",
-    "explanation": "Set 4x + 3 = 35. Subtract 3: 4x = 32. Divide by 4: x = 8."
+    "question": "If an object starts at rest and speeds up, is it accelerating? Answer yes or no.",
+    "answer": "yes",
+    "explanation": "Acceleration means a change in velocity. Speeding up from rest is acceleration."
+  },
+  {
+    "type": "mcq",
+    "question": "Which force pulls objects toward Earth?",
+    "options": ["Magnetism", "Gravity", "Friction", "Tension"],
+    "answer": "Gravity",
+    "explanation": "Gravity pulls objects with mass toward Earth and toward each other."
+  },
+  {
+    "type": "mcq",
+    "question": "Sound travels best through which type of material?",
+    "options": ["Vacuum", "Solid", "Empty space", "No material is needed"],
+    "answer": "Solid",
+    "explanation": "Sound needs particles to vibrate. It usually travels fastest through solids because particles are close together."
+  },
+  {
+    "type": "input",
+    "question": "A 4 kg object is lifted 2 m. Using g = 10 N/kg, what is the gain in gravitational potential energy in joules?",
+    "answer": "80",
+    "explanation": "Gravitational potential energy = mass times g times height = 4 times 10 times 2 = 80 J."
+  },
+  {
+    "type": "mcq",
+    "question": "Which sentence is an example of energy conservation?",
+    "options": ["Energy can be created from nothing", "Energy can disappear forever", "Energy changes form but the total amount is conserved", "Only heat is energy"],
+    "answer": "Energy changes form but the total amount is conserved",
+    "explanation": "The law of conservation of energy says energy cannot be created or destroyed, only transferred or transformed."
   }
 ]
