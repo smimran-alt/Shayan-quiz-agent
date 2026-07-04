@@ -9,60 +9,67 @@
   <title>Shayan Learning Dashboard</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    :root{--bg:#f4f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--blue:#2563eb;--green:#047857;--amber:#b45309;--red:#b91c1c;--purple:#7c3aed;--shadow:0 10px 28px rgba(15,23,42,.08)}
-    body{background:var(--bg);color:var(--text)}
-    header.hero{max-width:1100px;margin:0 auto 20px;padding:34px 20px 18px;text-align:left}
-    .hero-card{background:linear-gradient(135deg,#ffffff,#eef5ff);border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:var(--shadow)}
-    .hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:4px 0;color:var(--muted)}
-    main{max-width:1100px;margin:0 auto;padding:0 20px 40px}.topline{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.pill{display:inline-flex;align-items:center;gap:6px;background:#eef2ff;color:#1e3a8a;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:700}
-    .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:18px 0}.metric{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}.metric span{color:var(--muted);font-size:13px}.metric strong{display:block;font-size:32px;line-height:1.1;margin-top:6px}.metric small{display:block;color:var(--muted);margin-top:6px}
-    .panel,.subject,.chart{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}
-    .section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:24px 0 12px}.section-title h2{margin:0}.section-title p{margin:0;color:var(--muted);font-size:14px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.subject h3{margin:0 0 8px;font-size:22px}.subject p{color:var(--muted)}.subject-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.badge{border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800}.badge.done{background:#ecfdf5;color:var(--green)}.badge.pending{background:#fffbeb;color:var(--amber)}.badge.review{background:#fef2f2;color:var(--red)}
-    .bar{height:14px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin:12px 0}.fill{height:100%;background:linear-gradient(90deg,#60a5fa,#2563eb);width:0%;transition:width .4s ease}.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.stat{background:#f9fafb;border:1px solid #eef2f7;border-radius:12px;padding:10px}.stat b{display:block}.stat span{font-size:12px;color:var(--muted)}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.button,a.button,button{border:0;border-radius:12px;background:var(--blue);color:white;padding:10px 14px;text-decoration:none;font-weight:800;cursor:pointer}.secondary{background:#eef2f7!important;color:#111827!important}.danger{background:#fee2e2!important;color:#991b1b!important}.button:hover,button:hover{filter:brightness(.97)}
-    .next-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.next-item{border:1px dashed #cbd5e1;border-radius:14px;padding:12px;background:#f8fafc}.next-item b{display:block}.next-item span{color:var(--muted);font-size:13px}
-    .chart{margin-top:16px}.chart-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters button{padding:8px 10px;background:#eef2f7;color:#111827}.filters button.active{background:var(--blue);color:white}.graph-wrap{overflow-x:auto}.chart svg{width:100%;min-width:620px;height:310px}.empty{color:var(--muted);font-style:italic;padding:22px;background:#f9fafb;border-radius:14px}.history-table{width:100%;border-collapse:collapse;margin-top:12px}.history-table th,.history-table td{border-bottom:1px solid var(--line);text-align:left;padding:10px;font-size:14px}.history-table th{color:var(--muted);font-size:12px;text-transform:uppercase}.small{font-size:13px;color:var(--muted)}
-    .legend{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}.legend span{font-size:12px;color:var(--muted)}.dot{display:inline-block;width:10px;height:10px;border-radius:999px;margin-right:5px;background:var(--blue)}
-    footer{text-align:center;color:var(--muted);padding:20px}
-    @media(max-width:640px){.hero h1{font-size:26px}.stats{grid-template-columns:1fr}.history-table{display:block;overflow-x:auto}.metric strong{font-size:26px}}
+    :root{
+      --ink:#0f172a;--muted:#64748b;--line:rgba(148,163,184,.25);--glass:rgba(255,255,255,.72);
+      --blue:#2563eb;--violet:#7c3aed;--green:#059669;--amber:#d97706;--red:#dc2626;--cyan:#0891b2;
+      --shadow:0 24px 70px rgba(15,23,42,.16);--soft:0 12px 30px rgba(15,23,42,.09);--radius:26px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:
+      radial-gradient(circle at 10% 10%,rgba(59,130,246,.26),transparent 28%),
+      radial-gradient(circle at 86% 8%,rgba(124,58,237,.24),transparent 30%),
+      radial-gradient(circle at 50% 100%,rgba(5,150,105,.18),transparent 34%),#eef4ff;overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.32) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.32) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),transparent 85%);pointer-events:none;z-index:-1}
+    a{text-decoration:none}.wrap{max-width:1180px;margin:0 auto;padding:22px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,var(--blue),var(--violet));display:grid;place-items:center;color:white;font-size:24px;box-shadow:var(--soft)}.brand h1{font-size:22px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}.top-actions{display:flex;gap:10px;flex-wrap:wrap}.hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:34px;padding:34px;background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(255,255,255,.56));box-shadow:var(--shadow);backdrop-filter:blur(18px)}.hero:after{content:"";position:absolute;right:-90px;top:-80px;width:260px;height:260px;border-radius:50%;background:linear-gradient(135deg,rgba(37,99,235,.25),rgba(124,58,237,.25));filter:blur(4px)}.hero-content{position:relative;z-index:1;display:grid;grid-template-columns:1.5fr .8fr;gap:22px;align-items:center}.eyebrow{display:inline-flex;gap:8px;align-items:center;background:rgba(37,99,235,.1);color:#1e40af;border:1px solid rgba(37,99,235,.16);padding:8px 12px;border-radius:999px;font-size:13px;font-weight:800}.hero h2{font-size:44px;line-height:1;margin:16px 0 10px;letter-spacing:-1px}.hero p{color:var(--muted);font-size:16px;line-height:1.6;margin:0}.hero-card{background:rgba(15,23,42,.92);color:white;border-radius:26px;padding:22px;box-shadow:var(--soft)}.hero-card small{display:block;color:#cbd5e1;margin-bottom:8px}.hero-card strong{display:block;font-size:42px}.hero-card span{color:#bfdbfe}.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.chip{font-size:13px;font-weight:800;border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.75);border:1px solid var(--line);color:#334155}
+    .btn,button{border:0;border-radius:15px;padding:11px 14px;font-weight:900;cursor:pointer;background:linear-gradient(135deg,var(--blue),var(--violet));color:white;box-shadow:0 10px 22px rgba(37,99,235,.22);display:inline-flex;align-items:center;gap:8px}.btn.secondary,button.secondary{background:rgba(255,255,255,.8);color:#111827;border:1px solid var(--line);box-shadow:none}.btn.danger,button.danger{background:#fee2e2;color:#991b1b;box-shadow:none}.btn:hover,button:hover{transform:translateY(-1px);filter:brightness(.99)}
+    .summary{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:18px 0}.metric{position:relative;overflow:hidden;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(18px);border-radius:24px;padding:18px;box-shadow:var(--soft)}.metric:before{content:"";position:absolute;right:-28px;top:-28px;width:90px;height:90px;border-radius:50%;background:rgba(37,99,235,.1)}.metric .icon{font-size:22px}.metric span{display:block;color:var(--muted);font-size:13px;font-weight:800;margin-top:8px}.metric strong{display:block;font-size:34px;line-height:1.05;margin-top:5px}.metric small{display:block;color:var(--muted);font-size:12px;margin-top:6px}.section-title{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin:26px 0 12px}.section-title h2{margin:0;font-size:25px}.section-title p{margin:4px 0 0;color:var(--muted)}.panel,.subject,.chart{border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(18px);border-radius:var(--radius);padding:22px;box-shadow:var(--soft)}.next-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.next-item{background:rgba(255,255,255,.72);border:1px dashed rgba(100,116,139,.35);border-radius:20px;padding:16px}.next-item b{display:block;font-size:17px}.next-item span{display:block;color:var(--muted);font-size:13px;line-height:1.45;margin:6px 0 12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:16px}.subject{position:relative;overflow:hidden}.subject:before{content:"";position:absolute;inset:0 0 auto;height:6px;background:var(--accent,#2563eb)}.subject-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.subject h3{font-size:23px;margin:6px 0}.subject p{color:var(--muted);line-height:1.45}.emoji{font-size:32px}.badge{border-radius:999px;padding:7px 10px;font-size:12px;font-weight:900}.badge.done{background:#dcfce7;color:#166534}.badge.pending{background:#fef3c7;color:#92400e}.badge.review{background:#fee2e2;color:#991b1b}.bar{height:15px;background:rgba(148,163,184,.2);border-radius:999px;overflow:hidden;margin:14px 0}.fill{height:100%;width:0%;border-radius:999px;transition:width .55s ease}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.stat{border:1px solid rgba(148,163,184,.18);background:rgba(255,255,255,.65);border-radius:16px;padding:11px}.stat b{display:block;font-size:17px}.stat span{font-size:12px;color:var(--muted);font-weight:700}.ring-row{display:flex;align-items:center;gap:14px}.ring{--p:0;--c:#2563eb;width:86px;height:86px;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%),rgba(148,163,184,.18) 0);display:grid;place-items:center;flex:0 0 auto}.ring:before{content:attr(data-label);width:64px;height:64px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:900;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(148,163,184,.18)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.chart{margin-top:16px}.chart-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters button{padding:8px 11px;background:rgba(255,255,255,.78);color:#111827;box-shadow:none;border:1px solid var(--line)}.filters button.active{background:linear-gradient(135deg,var(--blue),var(--violet));color:white}.legend{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0}.legend span{font-size:12px;color:var(--muted);font-weight:800}.dot{display:inline-block;width:10px;height:10px;border-radius:999px;margin-right:6px}.graph-wrap{overflow-x:auto;background:rgba(255,255,255,.6);border:1px solid rgba(148,163,184,.18);border-radius:20px;padding:10px}.chart svg{width:100%;min-width:650px;height:320px}.empty{color:var(--muted);font-style:italic;padding:24px;background:rgba(255,255,255,.65);border-radius:18px}.history-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:12px;overflow:hidden;border-radius:18px}.history-table th,.history-table td{border-bottom:1px solid rgba(148,163,184,.2);text-align:left;padding:12px;font-size:14px;background:rgba(255,255,255,.55)}.history-table th{color:var(--muted);font-size:12px;text-transform:uppercase;background:rgba(241,245,249,.9)}.small{font-size:13px;color:var(--muted)}footer{text-align:center;color:var(--muted);padding:26px}.sparkle{animation:floaty 4s ease-in-out infinite}@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+    @media(max-width:980px){.summary{grid-template-columns:repeat(2,1fr)}.hero-content{grid-template-columns:1fr}.hero h2{font-size:36px}}
+    @media(max-width:640px){.wrap{padding:14px}.topbar{align-items:flex-start;flex-direction:column}.summary{grid-template-columns:1fr}.hero{padding:22px}.hero h2{font-size:30px}.stats{grid-template-columns:1fr}.history-table{display:block;overflow-x:auto}.metric strong{font-size:28px}.ring-row{align-items:flex-start}.ring{width:76px;height:76px}.ring:before{width:56px;height:56px}}
   </style>
   <script>if(location.pathname.endsWith('/index.html')){history.replaceState(null,'','/Shayan-quiz-agent/')}</script>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-card">
-      <h1>Shayan Learning Dashboard</h1>
-      <p>Track tests, pending subjects, latest scores, and score history in one place.</p>
-      <div class="topline">
-        <span class="pill">Test Mode only</span>
-        <span class="pill">Answers hidden until submit</span>
-        <span class="pill">Email + WhatsApp results</span>
-        <span class="pill">Dashboard version: improved dashboard</span>
-      </div>
-    </div>
-  </header>
+  <div class="wrap">
+    <nav class="topbar">
+      <div class="brand"><div class="logo sparkle">🎓</div><div><h1>Shayan Learning</h1><p>Personal quiz tracker</p></div></div>
+      <div class="top-actions"><a class="btn secondary" href="test-email.html">✉️ Test Email</a><button class="secondary" onclick="copySummary()">📋 Copy Summary</button></div>
+    </nav>
 
-  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <div>
+          <span class="eyebrow">✨ Fancy dashboard active</span>
+          <h2>Learning progress, beautifully tracked.</h2>
+          <p>See pending tests, latest scores, best subject, attempts, and score history. Shayan can start or retake any subject from one permanent dashboard link.</p>
+          <div class="chips"><span class="chip">🔒 Test Mode only</span><span class="chip">📊 History graph</span><span class="chip">📱 WhatsApp results</span><span class="chip">📧 Email results</span></div>
+        </div>
+        <div class="hero-card">
+          <small>Overall latest average</small>
+          <strong id="heroAverage">0%</strong>
+          <span id="heroMessage">Complete a test to start tracking progress.</span>
+        </div>
+      </div>
+    </section>
+
     <section class="summary">
-      <div class="metric"><span>Completed tests</span><strong id="completedCount">0</strong><small id="completedHelp">out of 4</small></div>
-      <div class="metric"><span>Pending tests</span><strong id="pendingCount">4</strong><small id="pendingHelp">waiting for submission</small></div>
-      <div class="metric"><span>Average latest score</span><strong id="averageScore">0%</strong><small>completed tests only</small></div>
-      <div class="metric"><span>Best subject</span><strong id="bestSubject">—</strong><small id="bestScore">no score yet</small></div>
-      <div class="metric"><span>Total attempts</span><strong id="totalAttempts">0</strong><small>saved on this device</small></div>
+      <div class="metric"><div class="icon">✅</div><span>Completed</span><strong id="completedCount">0</strong><small id="completedHelp">out of 4 tests</small></div>
+      <div class="metric"><div class="icon">⏳</div><span>Pending</span><strong id="pendingCount">4</strong><small>waiting for submission</small></div>
+      <div class="metric"><div class="icon">📈</div><span>Average score</span><strong id="averageScore">0%</strong><small>completed tests only</small></div>
+      <div class="metric"><div class="icon">🏆</div><span>Best subject</span><strong id="bestSubject">—</strong><small id="bestScore">no score yet</small></div>
+      <div class="metric"><div class="icon">🧾</div><span>Total attempts</span><strong id="totalAttempts">0</strong><small>saved on this device</small></div>
     </section>
 
     <section class="panel" id="nextPanel">
-      <div class="section-title"><h2>Next tests to complete</h2><p>Pending subjects appear here</p></div>
+      <div class="section-title"><div><h2>🚀 Next tests to complete</h2><p>Pending subjects appear here first.</p></div></div>
       <div class="next-list" id="nextList"></div>
     </section>
 
-    <div class="section-title"><h2>Subject status</h2><p>Latest score and attempt count for each subject</p></div>
+    <div class="section-title"><div><h2>📚 Subject cards</h2><p>Latest score, attempts, status, and quick start buttons.</p></div></div>
     <section class="grid" id="subjectGrid"></section>
 
     <section class="chart">
       <div class="chart-head">
-        <div><h2>Score history graph</h2><p class="small">Each point is a submitted attempt. Use the filters to view one subject.</p></div>
+        <div><h2>📉 Score history graph</h2><p class="small">Each point is a submitted attempt. Filter by subject to see improvement.</p></div>
         <div class="filters" id="filters"></div>
       </div>
       <div class="legend" id="legend"></div>
@@ -71,41 +78,43 @@
     </section>
 
     <section class="panel" style="margin-top:18px">
-      <h2>How to read this dashboard</h2>
-      <p>The progress bar shows Shayan's <b>latest score percentage</b> for that subject. Example: 16 out of 20 = 80%, so the bar fills to 80%.</p>
+      <h2>💡 How to read the dashboard</h2>
+      <p>The progress ring and bar show Shayan's <b>latest score percentage</b> for that subject. Example: 16 out of 20 = 80%, so the bar fills to 80%.</p>
       <p class="small">Progress and history are saved in this browser on this device. If Shayan uses another device or clears browser data, this dashboard may not show previous attempts. Email and WhatsApp results still work separately.</p>
-      <div class="actions"><button class="secondary" onclick="copySummary()">Copy progress summary</button><button class="danger" onclick="resetProgress()">Reset local progress</button><a class="button secondary" href="test-email.html">Test Email</a></div>
+      <div class="actions"><button class="secondary" onclick="copySummary()">📋 Copy progress summary</button><button class="danger" onclick="resetProgress()">🗑 Reset local progress</button></div>
     </section>
-  </main>
-
+  </div>
   <footer>Shayan quiz system</footer>
 
   <script>
     if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
     const SUBJECTS=[
-      {id:'math',title:'Math',desc:'Law of indices: product, quotient, power, zero, negative and fractional index laws.',url:'math.html',color:'#2563eb'},
-      {id:'physics',title:'Physics',desc:'Forces, energy, waves, circuits, and motion.',url:'physics.html',color:'#7c3aed'},
-      {id:'chemistry',title:'Chemistry',desc:'Grade 9 elements and periodic table with shuffled questions and revision advice.',url:'chemistry.html',color:'#047857'},
-      {id:'biology',title:'Biology',desc:'Cells, body systems, genetics, and ecosystems.',url:'biology.html',color:'#b45309'}
+      {id:'math',icon:'🧮',title:'Math',desc:'Law of indices: product, quotient, power, zero, negative and fractional index laws.',url:'math.html',color:'#2563eb'},
+      {id:'physics',icon:'⚡',title:'Physics',desc:'Forces, energy, waves, circuits, and motion.',url:'physics.html',color:'#7c3aed'},
+      {id:'chemistry',icon:'🧪',title:'Chemistry',desc:'Grade 9 elements and periodic table with shuffled questions and revision advice.',url:'chemistry.html',color:'#059669'},
+      {id:'biology',icon:'🧬',title:'Biology',desc:'Cells, body systems, genetics, and ecosystems.',url:'biology.html',color:'#d97706'}
     ];
     const KEY='shayanQuizProgress';
     let activeSubject='all';
 
     function loadProgress(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
     function clamp(n){return Math.max(0,Math.min(100,Number(n)||0))}
-    function subjectTitle(id){let s=SUBJECTS.find(x=>x.id===id);return s?s.title:id}
-    function subjectColor(id){let s=SUBJECTS.find(x=>x.id===id);return s?s.color:'#2563eb'}
+    function subject(id){return SUBJECTS.find(x=>x.id===id)||{title:id,color:'#2563eb',icon:'📘'}}
     function latest(r){return r&&r.completed?r:null}
     function getAttempts(p){let out=[];SUBJECTS.forEach(s=>{let r=p[s.id];if(!r)return;let h=Array.isArray(r.history)?r.history:[];if(h.length){h.forEach(a=>out.push({...a,subjectId:s.id,title:s.title}))}else if(r.completed){out.push({...r,subjectId:s.id,title:s.title,ts:0})}});return out.sort((a,b)=>(a.ts||0)-(b.ts||0))}
     function performanceClass(pct){pct=Number(pct)||0;if(pct>=75)return 'done';if(pct>=60)return 'pending';return 'review'}
-    function bar(p,color){return '<div class="bar"><div class="fill" style="width:'+clamp(p)+'%;background:linear-gradient(90deg,'+color+'99,'+color+')"></div></div>'}
+    function bar(p,color){return '<div class="bar"><div class="fill" style="width:'+clamp(p)+'%;background:linear-gradient(90deg,'+color+'88,'+color+')"></div></div>'}
+    function ring(p,color){p=clamp(p);return '<div class="ring" data-label="'+p+'%" style="--p:'+p+';--c:'+color+'"></div>'}
 
     function renderSummary(p,attempts){
       let completed=0,totalScore=0,best=null;
       SUBJECTS.forEach(s=>{let r=latest(p[s.id]);if(r){completed++;totalScore+=Number(r.percentage)||0;if(!best||Number(r.percentage)>Number(best.percentage))best={...r,title:s.title}}});
+      let avg=completed?Math.round(totalScore/completed):0;
       document.getElementById('completedCount').textContent=completed;
       document.getElementById('pendingCount').textContent=SUBJECTS.length-completed;
-      document.getElementById('averageScore').textContent=completed?Math.round(totalScore/completed)+'%':'0%';
+      document.getElementById('averageScore').textContent=avg+'%';
+      document.getElementById('heroAverage').textContent=avg+'%';
+      document.getElementById('heroMessage').textContent=completed?('Based on '+completed+' completed test'+(completed>1?'s.':'.')):'Complete a test to start tracking progress.';
       document.getElementById('bestSubject').textContent=best?best.title:'—';
       document.getElementById('bestScore').textContent=best?best.percentage+'% latest score':'no score yet';
       document.getElementById('totalAttempts').textContent=attempts.length;
@@ -114,24 +123,23 @@
     function renderNext(p){
       let pending=SUBJECTS.filter(s=>!(p[s.id]&&p[s.id].completed));
       let box=document.getElementById('nextList');
-      if(!pending.length){box.innerHTML='<div class="next-item"><b>All tests completed</b><span>Great work. Shayan can retake any test to improve scores and build history.</span></div>';return}
-      box.innerHTML=pending.map(s=>'<div class="next-item"><b>'+s.title+'</b><span>'+s.desc+'</span><div class="actions"><a class="button" href="'+s.url+'">Start '+s.title+'</a></div></div>').join('');
+      if(!pending.length){box.innerHTML='<div class="next-item"><b>🎉 All tests completed</b><span>Great work. Shayan can retake any test to improve scores and build the history graph.</span><div class="actions"><a class="btn" href="math.html">Retake Math</a></div></div>';return}
+      box.innerHTML=pending.map(s=>'<div class="next-item"><b>'+s.icon+' '+s.title+'</b><span>'+s.desc+'</span><a class="btn" href="'+s.url+'">Start '+s.title+'</a></div>').join('');
     }
 
     function renderSubjects(p){
       let grid=document.getElementById('subjectGrid');grid.innerHTML='';
       SUBJECTS.forEach(s=>{
         let r=latest(p[s.id]);let done=!!r;let pct=done?clamp(r.percentage):0;let attempts=p[s.id]&&Array.isArray(p[s.id].history)?p[s.id].history.length:(done?1:0);let badge=done?(pct>=60?'Completed':'Needs review'):'Pending';let cls=done?performanceClass(pct):'pending';
-        grid.innerHTML+='<div class="subject"><div class="subject-top"><h3>'+s.title+'</h3><span class="badge '+cls+'">'+badge+'</span></div><p>'+s.desc+'</p>'+bar(pct,s.color)+'<div class="stats"><div class="stat"><b>'+(done?(r.score+'/'+r.total):'—')+'</b><span>Latest score</span></div><div class="stat"><b>'+(done?(pct+'%'):'0%')+'</b><span>Progress bar</span></div><div class="stat"><b>'+attempts+'</b><span>Attempts</span></div><div class="stat"><b>'+(done?r.performance:'Not started')+'</b><span>Performance</span></div></div><p class="small">'+(done?('Last submitted: '+r.submittedAt):'This test is still pending.')+'</p><div class="actions"><a class="button" href="'+s.url+'">'+(done?'Retake':'Start')+' '+s.title+'</a></div></div>';
+        grid.innerHTML+='<div class="subject" style="--accent:'+s.color+'"><div class="subject-top"><div><div class="emoji">'+s.icon+'</div><h3>'+s.title+'</h3></div><span class="badge '+cls+'">'+badge+'</span></div><p>'+s.desc+'</p><div class="ring-row">'+ring(pct,s.color)+'<div style="flex:1">'+bar(pct,s.color)+'<p class="small">Latest progress score</p></div></div><div class="stats"><div class="stat"><b>'+(done?(r.score+'/'+r.total):'—')+'</b><span>Latest score</span></div><div class="stat"><b>'+(done?(pct+'%'):'0%')+'</b><span>Score percent</span></div><div class="stat"><b>'+attempts+'</b><span>Attempts</span></div><div class="stat"><b>'+(done?r.performance:'Not started')+'</b><span>Performance</span></div></div><p class="small">'+(done?('Last submitted: '+r.submittedAt):'This test is still pending.')+'</p><div class="actions"><a class="btn" href="'+s.url+'">'+(done?'Retake':'Start')+' '+s.title+'</a></div></div>';
       });
     }
 
     function renderFilters(){
       let f=document.getElementById('filters');
       let buttons=['all',...SUBJECTS.map(s=>s.id)];
-      f.innerHTML=buttons.map(id=>'<button class="'+(activeSubject===id?'active':'')+'" onclick="setFilter(\''+id+'\')">'+(id==='all'?'All':subjectTitle(id))+'</button>').join('');
-      let legend=document.getElementById('legend');
-      legend.innerHTML=SUBJECTS.map(s=>'<span><i class="dot" style="background:'+s.color+'"></i>'+s.title+'</span>').join('');
+      f.innerHTML=buttons.map(id=>'<button class="'+(activeSubject===id?'active':'')+'" onclick="setFilter(\''+id+'\')">'+(id==='all'?'All':subject(id).icon+' '+subject(id).title)+'</button>').join('');
+      document.getElementById('legend').innerHTML=SUBJECTS.map(s=>'<span><i class="dot" style="background:'+s.color+'"></i>'+s.title+'</span>').join('');
     }
     function setFilter(id){activeSubject=id;render()}
 
@@ -140,20 +148,20 @@
       let attempts=activeSubject==='all'?allAttempts:allAttempts.filter(a=>a.subjectId===activeSubject);
       let g=document.getElementById('historyGraph'),list=document.getElementById('historyList');
       if(!attempts.length){g.innerHTML='<p class="empty">No historical results yet for this view. After Shayan submits tests, scores will appear here.</p>';list.innerHTML='';return}
-      let w=860,h=300,pad=44;let pts=attempts.map((a,i)=>{let x=pad+(attempts.length===1?0.5:(i/(attempts.length-1)))*(w-2*pad);let y=h-pad-(clamp(a.percentage)/100)*(h-2*pad);return {x,y,a,i}});
-      let gridLines=[0,25,50,75,100].map(v=>{let y=h-pad-(v/100)*(h-2*pad);return '<line x1="'+pad+'" y1="'+y+'" x2="'+(w-pad)+'" y2="'+y+'" stroke="#e5e7eb"/><text x="8" y="'+(y+4)+'" font-size="12" fill="#6b7280">'+v+'%</text>'}).join('');
-      let lines=activeSubject==='all'?SUBJECTS.map(s=>{let sp=pts.filter(p=>p.a.subjectId===s.id);if(!sp.length)return '';return '<polyline points="'+sp.map(p=>p.x+','+p.y).join(' ')+'" fill="none" stroke="'+s.color+'" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'}).join(''):'<polyline points="'+pts.map(p=>p.x+','+p.y).join(' ')+'" fill="none" stroke="'+subjectColor(activeSubject)+'" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
-      let circles=pts.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="6" fill="'+subjectColor(p.a.subjectId)+'"><title>'+subjectTitle(p.a.subjectId)+': '+p.a.percentage+'% on '+(p.a.submittedAt||'')+'</title></circle>').join('');
-      let labels=pts.map(p=>'<text x="'+p.x+'" y="'+(h-10)+'" text-anchor="middle" font-size="11" fill="#6b7280">'+(p.i+1)+'</text>').join('');
-      g.innerHTML='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Score history graph">'+gridLines+'<line x1="'+pad+'" y1="'+pad+'" x2="'+pad+'" y2="'+(h-pad)+'" stroke="#9ca3af"/><line x1="'+pad+'" y1="'+(h-pad)+'" x2="'+(w-pad)+'" y2="'+(h-pad)+'" stroke="#9ca3af"/>'+lines+circles+labels+'</svg>';
+      let w=900,h=315,pad=48;let pts=attempts.map((a,i)=>{let x=pad+(attempts.length===1?0.5:(i/(attempts.length-1)))*(w-2*pad);let y=h-pad-(clamp(a.percentage)/100)*(h-2*pad);return {x,y,a,i}});
+      let gridLines=[0,25,50,75,100].map(v=>{let y=h-pad-(v/100)*(h-2*pad);return '<line x1="'+pad+'" y1="'+y+'" x2="'+(w-pad)+'" y2="'+y+'" stroke="rgba(148,163,184,.28)"/><text x="10" y="'+(y+4)+'" font-size="12" fill="#64748b">'+v+'%</text>'}).join('');
+      let lines=activeSubject==='all'?SUBJECTS.map(s=>{let sp=pts.filter(p=>p.a.subjectId===s.id);if(!sp.length)return '';return '<polyline points="'+sp.map(p=>p.x+','+p.y).join(' ')+'" fill="none" stroke="'+s.color+'" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'}).join(''):'<polyline points="'+pts.map(p=>p.x+','+p.y).join(' ')+'" fill="none" stroke="'+subject(activeSubject).color+'" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>';
+      let circles=pts.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="7" fill="'+subject(p.a.subjectId).color+'" stroke="white" stroke-width="3"><title>'+subject(p.a.subjectId).title+': '+p.a.percentage+'% on '+(p.a.submittedAt||'')+'</title></circle>').join('');
+      let labels=pts.map(p=>'<text x="'+p.x+'" y="'+(h-12)+'" text-anchor="middle" font-size="11" fill="#64748b">'+(p.i+1)+'</text>').join('');
+      g.innerHTML='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Score history graph">'+gridLines+'<line x1="'+pad+'" y1="'+pad+'" x2="'+pad+'" y2="'+(h-pad)+'" stroke="#94a3b8"/><line x1="'+pad+'" y1="'+(h-pad)+'" x2="'+(w-pad)+'" y2="'+(h-pad)+'" stroke="#94a3b8"/>'+lines+circles+labels+'</svg>';
       let recent=[...attempts].reverse().slice(0,10);
-      list.innerHTML='<h3>Recent attempts</h3><table class="history-table"><thead><tr><th>#</th><th>Subject</th><th>Score</th><th>Percent</th><th>Performance</th><th>Submitted</th></tr></thead><tbody>'+recent.map((a,i)=>'<tr><td>'+(recent.length-i)+'</td><td>'+subjectTitle(a.subjectId)+'</td><td>'+a.score+'/'+a.total+'</td><td><b>'+a.percentage+'%</b></td><td>'+a.performance+'</td><td>'+(a.submittedAt||'')+'</td></tr>').join('')+'</tbody></table>';
+      list.innerHTML='<h3>Recent attempts</h3><table class="history-table"><thead><tr><th>#</th><th>Subject</th><th>Score</th><th>Percent</th><th>Performance</th><th>Submitted</th></tr></thead><tbody>'+recent.map((a,i)=>'<tr><td>'+(recent.length-i)+'</td><td>'+subject(a.subjectId).icon+' '+subject(a.subjectId).title+'</td><td>'+a.score+'/'+a.total+'</td><td><b>'+a.percentage+'%</b></td><td>'+a.performance+'</td><td>'+(a.submittedAt||'')+'</td></tr>').join('')+'</tbody></table>';
     }
 
     function copySummary(){
       let p=loadProgress();let lines=['Shayan quiz progress summary'];
       SUBJECTS.forEach(s=>{let r=latest(p[s.id]);lines.push(s.title+': '+(r?(r.score+'/'+r.total+' ('+r.percentage+'%) - '+r.performance):'Pending'))});
-      navigator.clipboard&&navigator.clipboard.writeText(lines.join('\n')).then(()=>alert('Progress summary copied.')).catch(()=>alert(lines.join('\n')));
+      if(navigator.clipboard){navigator.clipboard.writeText(lines.join('\n')).then(()=>alert('Progress summary copied.')).catch(()=>alert(lines.join('\n')))}else{alert(lines.join('\n'))}
     }
     function resetProgress(){if(confirm('Clear saved dashboard progress and history on this device?')){localStorage.removeItem(KEY);render()}}
     function render(){let p=loadProgress();let attempts=getAttempts(p);renderSummary(p,attempts);renderNext(p);renderSubjects(p);renderHistory(attempts)}
