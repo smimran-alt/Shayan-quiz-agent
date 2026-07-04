@@ -16,7 +16,19 @@ function sendWhatsApp(){if(!lastResultText){alert('Submit the test first.');retu
 function scoreMessage(pct){if(pct>=90)return 'Excellent mastery';if(pct>=75)return 'Good work';if(pct>=60)return 'Needs revision';return 'Retake recommended'}
 function setShowAnswerVisibility(){document.querySelectorAll('button').forEach(b=>{let action=b.getAttribute('onclick')||'';if(action.includes('showAnswers'))b.style.display=submitted?'':'none'})}
 function subjectId(){let id=qc('subjectId','');if(id)return id;let f=qc('questionFile','questions.json').toLowerCase();if(f.includes('chemistry'))return 'chemistry';if(f.includes('physics'))return 'physics';if(f.includes('biology'))return 'biology';if(f.includes('math'))return 'math';return 'quiz'}
-function saveProgress(name,score,total,pct,performance,submittedAt){try{let p=JSON.parse(localStorage.getItem(PROGRESS_KEY)||'{}');let id=subjectId();p[id]={subjectId:id,title:qc('shortTitle',qc('title','Quiz')),student:name,score:score,total:total,percentage:pct,performance:performance,completed:true,submittedAt:submittedAt};localStorage.setItem(PROGRESS_KEY,JSON.stringify(p))}catch(e){console.log('Progress not saved',e)}}
+function saveProgress(name,score,total,pct,performance,submittedAt){
+  try{
+    let p=JSON.parse(localStorage.getItem(PROGRESS_KEY)||'{}');
+    let id=subjectId();
+    let old=p[id]||{};
+    let attempt={subjectId:id,title:qc('shortTitle',qc('title','Quiz')),student:name,score:score,total:total,percentage:pct,performance:performance,submittedAt:submittedAt,ts:Date.now()};
+    let history=Array.isArray(old.history)?old.history:[];
+    history.push(attempt);
+    if(history.length>50)history=history.slice(history.length-50);
+    p[id]={...attempt,completed:true,history:history};
+    localStorage.setItem(PROGRESS_KEY,JSON.stringify(p));
+  }catch(e){console.log('Progress not saved',e)}
+}
 
 async function loadQuestions(){
   try{
@@ -87,7 +99,7 @@ async function gradeQuiz(e){
   lastResultText=name+' completed '+qc('title','Shayan Quiz')+'.\nMode: Test\nScore: '+score+'/'+questions.length+'\nPercentage: '+pct+'%\nPerformance: '+performance+'\nSubmitted: '+submittedAt+'\nQuestions to review: '+(wrong.length?wrong.join(', '):'None')+'\nRevision advice:\n- '+revision.join('\n- ')+'\n\n'+details.join('\n\n---\n\n');
   let rb=document.getElementById('resultBox');
   rb.style.display='block';
-  rb.innerHTML='<h2>'+esc(name)+' Result</h2><p><b>Mode:</b> Test</p><p><b>Score:</b> '+score+'/'+questions.length+'</p><p><b>Percentage:</b> '+pct+'%</p><p><b>Performance:</b> '+esc(performance)+'</p><p><b>Questions to review:</b> '+(wrong.length?wrong.join(', '):'None')+'</p><h3>Revision Plan</h3><ul>'+revision.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul><div class="buttons"><button type="button" onclick="sendWhatsApp()">Send Result on WhatsApp</button><button type="button" onclick="showAnswers()">Review Answers</button></div><div id="status" class="status">Sending result...</div>';
+  rb.innerHTML='<h2>'+esc(name)+' Result</h2><p><b>Mode:</b> Test</p><p><b>Score:</b> '+score+'/'+questions.length+'</p><p><b>Percentage:</b> '+pct+'%</p><p><b>Performance:</b> '+esc(performance)+'</p><p><b>Questions to review:</b> '+(wrong.length?wrong.join(', '):'None')+'</p><h3>Revision Plan</h3><ul>'+revision.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul><div class="buttons"><button type="button" onclick="sendWhatsApp()">Send Result on WhatsApp</button><button type="button" onclick="showAnswers()">Review Answers</button><a class="button secondary" href="index.html">Back to Dashboard</a></div><div id="status" class="status">Sending result...</div>';
   await sendResult(name,score,pct,submittedAt,wrong,performance,revision);
 }
 
