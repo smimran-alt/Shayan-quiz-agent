@@ -1,0 +1,12 @@
+[
+  {"type":"input","question":"Solve: 3x + 7 = 28. What is x?","answer":"7","explanation":"Subtract 7 from both sides: 3x = 21. Divide by 3: x = 7."},
+  {"type":"input","question":"Find 15% of 240.","answer":"36","explanation":"15% of 240 is 36."},
+  {"type":"mcq","question":"Which expression is equivalent to 4(2x + 3)?","options":["8x + 3","6x + 12","8x + 12","4x + 6"],"answer":"8x + 12","explanation":"Distribute 4 to both terms."},
+  {"type":"input","question":"A triangle has angles 55 and 65 degrees. What is the third angle?","answer":"60","explanation":"180 - 55 - 65 = 60."},
+  {"type":"input","question":"Simplify: 2^3 x 2^4","answer":"128","explanation":"2^3 x 2^4 = 2^7 = 128."},
+  {"type":"mcq","question":"What is the slope of y = 5x - 2?","options":["-2","2","5","-5"],"answer":"5","explanation":"In y = mx + b, m is the slope."},
+  {"type":"input","question":"Find the area of a circle with radius 7 cm. Use pi = 22/7.","answer":"154","explanation":"Area = pi r squared = 154."},
+  {"type":"input","question":"A box has 5 red, 3 blue, and 2 green balls. What is the probability of choosing a blue ball? Write as a fraction.","answer":"3/10","explanation":"3 blue out of 10 total balls = 3/10."},
+  {"type":"input","question":"Solve: 5y - 9 = 31. What is y?","answer":"8","explanation":"Add 9 to both sides: 5y = 40. Divide by 5: y = 8."},
+  {"type":"mcq","question":"Which number is irrational?","options":["0.75","square root of 49","pi","3/8"],"answer":"pi","explanation":"Pi is irrational."}
+]
