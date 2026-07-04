@@ -8,21 +8,18 @@ function cfg(k,f){return (window.QUIZ_CONFIG&&window.QUIZ_CONFIG[k])||f}
 function esc(s){return String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')}
 function norm(s){return String(s??'').trim().toLowerCase().replaceAll('−','-').replace(/[^a-z0-9\-]/g,'')}
 function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function getMode(){let x=document.querySelector('input[name="quizMode"]:checked');return x?x.value:(qc('defaultMode','test'))}
-function isTestMode(){return getMode()==='test'}
 function answerList(q){let a=q.answers||q.acceptedAnswers||[q.answer];return Array.isArray(a)?a:[a]}
 function displayAnswer(q){return q.answer || answerList(q)[0] || ''}
 function isCorrect(student,q){return answerList(q).some(a=>norm(student)===norm(a))}
-function sendWhatsApp(){if(!lastResultText){alert('Submit the quiz first.');return}window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(lastResultText),'_blank')}
+function sendWhatsApp(){if(!lastResultText){alert('Submit the test first.');return}window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(lastResultText),'_blank')}
 function scoreMessage(pct){if(pct>=90)return 'Excellent mastery';if(pct>=75)return 'Good work';if(pct>=60)return 'Needs revision';return 'Retake recommended'}
-function setShowAnswerVisibility(){let b=document.getElementById('showAnswersBtn');if(!b)return;b.style.display=(isTestMode()&&!submitted)?'none':''}
-function modeChanged(){submitted=false;lastResultText='';let rb=document.getElementById('resultBox');if(rb){rb.style.display='none';rb.innerHTML=''}document.querySelectorAll('.feedback').forEach(f=>{f.className='feedback';f.textContent='' });setShowAnswerVisibility()}
+function setShowAnswerVisibility(){document.querySelectorAll('button').forEach(b=>{let action=b.getAttribute('onclick')||'';if(action.includes('showAnswers'))b.style.display=submitted?'':'none'})}
 
 async function loadQuestions(){
   try{
     document.title=qc('title','Shayan Quiz');
     let title=document.getElementById('pageTitle');if(title)title.textContent=qc('title','Shayan Quiz');
-    let sub=document.getElementById('pageSub');if(sub)sub.textContent=qc('subtitle','Online quiz with automatic grading, email, WhatsApp, practice mode, and test mode.');
+    let sub=document.getElementById('pageSub');if(sub)sub.textContent=qc('subtitle','Online test with automatic grading, email, WhatsApp, and revision advice. Answers stay hidden until submission.');
     let r=await fetch(qc('questionFile','questions.json')+'?v='+Date.now(),{cache:'reload'});
     let loaded=await r.json();
     questions=shuffle(loaded.map(q=>{let copy={...q};if(copy.options)copy.options=shuffle([...copy.options]);return copy}));
@@ -83,10 +80,10 @@ async function gradeQuiz(e){
   let revision=buildRevision(wrongItems);
   let name=document.getElementById('studentName').value.trim()||'Student';
   let submittedAt=new Date().toLocaleString();
-  lastResultText=name+' completed '+qc('title','Shayan Quiz')+'.\nMode: '+(isTestMode()?'Test':'Practice')+'\nScore: '+score+'/'+questions.length+'\nPercentage: '+pct+'%\nPerformance: '+performance+'\nSubmitted: '+submittedAt+'\nQuestions to review: '+(wrong.length?wrong.join(', '):'None')+'\nRevision advice:\n- '+revision.join('\n- ')+'\n\n'+details.join('\n\n---\n\n');
+  lastResultText=name+' completed '+qc('title','Shayan Quiz')+'.\nMode: Test\nScore: '+score+'/'+questions.length+'\nPercentage: '+pct+'%\nPerformance: '+performance+'\nSubmitted: '+submittedAt+'\nQuestions to review: '+(wrong.length?wrong.join(', '):'None')+'\nRevision advice:\n- '+revision.join('\n- ')+'\n\n'+details.join('\n\n---\n\n');
   let rb=document.getElementById('resultBox');
   rb.style.display='block';
-  rb.innerHTML='<h2>'+esc(name)+' Result</h2><p><b>Mode:</b> '+(isTestMode()?'Test':'Practice')+'</p><p><b>Score:</b> '+score+'/'+questions.length+'</p><p><b>Percentage:</b> '+pct+'%</p><p><b>Performance:</b> '+esc(performance)+'</p><p><b>Questions to review:</b> '+(wrong.length?wrong.join(', '):'None')+'</p><h3>Revision Plan</h3><ul>'+revision.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul><div class="buttons"><button type="button" onclick="sendWhatsApp()">Send Result on WhatsApp</button><button type="button" onclick="showAnswers()">Review Answers</button></div><div id="status" class="status">Sending result...</div>';
+  rb.innerHTML='<h2>'+esc(name)+' Result</h2><p><b>Mode:</b> Test</p><p><b>Score:</b> '+score+'/'+questions.length+'</p><p><b>Percentage:</b> '+pct+'%</p><p><b>Performance:</b> '+esc(performance)+'</p><p><b>Questions to review:</b> '+(wrong.length?wrong.join(', '):'None')+'</p><h3>Revision Plan</h3><ul>'+revision.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul><div class="buttons"><button type="button" onclick="sendWhatsApp()">Send Result on WhatsApp</button><button type="button" onclick="showAnswers()">Review Answers</button></div><div id="status" class="status">Sending result...</div>';
   await sendResult(name,score,pct,submittedAt,wrong,performance,revision);
 }
 
@@ -105,7 +102,7 @@ async function sendResult(name,score,pct,submittedAt,wrong,performance,revision)
 }
 
 function showAnswers(){
-  if(isTestMode()&&!submitted){alert('Answers are hidden in Test Mode until the test is submitted. Use Practice Mode if Shayan is studying.');return}
+  if(!submitted){alert('Answers are hidden until the test is submitted.');return}
   questions.forEach((q,i)=>{let f=document.getElementById('feedback-'+i);f.className='feedback correct';f.textContent='Answer: '+displayAnswer(q)+'. '+(q.explanation||'')});
 }
 
