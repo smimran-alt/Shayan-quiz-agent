@@ -2,6 +2,7 @@ let questions=[];
 let lastResultText='';
 let submitted=false;
 const WA=['163','999','99961'].join('');
+const PROGRESS_KEY='shayanQuizProgress';
 
 function qc(k,f){return (window.SUBJECT_QUIZ_CONFIG&&window.SUBJECT_QUIZ_CONFIG[k])||f}
 function cfg(k,f){return (window.QUIZ_CONFIG&&window.QUIZ_CONFIG[k])||f}
@@ -14,6 +15,8 @@ function isCorrect(student,q){return answerList(q).some(a=>norm(student)===norm(
 function sendWhatsApp(){if(!lastResultText){alert('Submit the test first.');return}window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(lastResultText),'_blank')}
 function scoreMessage(pct){if(pct>=90)return 'Excellent mastery';if(pct>=75)return 'Good work';if(pct>=60)return 'Needs revision';return 'Retake recommended'}
 function setShowAnswerVisibility(){document.querySelectorAll('button').forEach(b=>{let action=b.getAttribute('onclick')||'';if(action.includes('showAnswers'))b.style.display=submitted?'':'none'})}
+function subjectId(){let id=qc('subjectId','');if(id)return id;let f=qc('questionFile','questions.json').toLowerCase();if(f.includes('chemistry'))return 'chemistry';if(f.includes('physics'))return 'physics';if(f.includes('biology'))return 'biology';if(f.includes('math'))return 'math';return 'quiz'}
+function saveProgress(name,score,total,pct,performance,submittedAt){try{let p=JSON.parse(localStorage.getItem(PROGRESS_KEY)||'{}');let id=subjectId();p[id]={subjectId:id,title:qc('shortTitle',qc('title','Quiz')),student:name,score:score,total:total,percentage:pct,performance:performance,completed:true,submittedAt:submittedAt};localStorage.setItem(PROGRESS_KEY,JSON.stringify(p))}catch(e){console.log('Progress not saved',e)}}
 
 async function loadQuestions(){
   try{
@@ -80,6 +83,7 @@ async function gradeQuiz(e){
   let revision=buildRevision(wrongItems);
   let name=document.getElementById('studentName').value.trim()||'Student';
   let submittedAt=new Date().toLocaleString();
+  saveProgress(name,score,questions.length,pct,performance,submittedAt);
   lastResultText=name+' completed '+qc('title','Shayan Quiz')+'.\nMode: Test\nScore: '+score+'/'+questions.length+'\nPercentage: '+pct+'%\nPerformance: '+performance+'\nSubmitted: '+submittedAt+'\nQuestions to review: '+(wrong.length?wrong.join(', '):'None')+'\nRevision advice:\n- '+revision.join('\n- ')+'\n\n'+details.join('\n\n---\n\n');
   let rb=document.getElementById('resultBox');
   rb.style.display='block';
