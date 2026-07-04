@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Email</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header><h1>Test Web3Forms Email</h1></header>
+  <main>
+    <section class="panel">
+      <p>Use this page after you paste your Web3Forms key into config.js.</p>
+      <button onclick="sendTest()">Send Test Email</button>
+      <a class="button secondary" href="index.html">Back to Quiz</a>
+      <div id="status" class="status" style="display:none"></div>
+    </section>
+  </main>
+  <script src="config.js"></script>
+  <script>
+    function cfg(k,f){return (window.QUIZ_CONFIG&&window.QUIZ_CONFIG[k])||f}
+    async function sendTest(){
+      let st=document.getElementById('status');st.style.display='block';
+      let key=cfg('web3formsAccessKey','');let email=cfg('parentEmail','');
+      if(!key){st.textContent='Web3Forms key is missing in config.js';return}
+      st.textContent='Sending test...';
+      try{
+        let r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:key,subject:'Test Email - Shayan Quiz',from_name:'Shayan Quiz Test',name:'Shayan Quiz Test',email:email,message:'This is a test from the Shayan quiz project.'})});
+        let data=await r.json();
+        if(r.ok&&data.success){st.textContent='Success. Web3Forms accepted the test. Check inbox/spam.'}else{st.textContent='Web3Forms rejected test: '+(data.message||'Unknown error')}
+      }catch(e){st.textContent='Could not connect: '+e.message}
+    }
+  </script>
+</body>
+</html>
