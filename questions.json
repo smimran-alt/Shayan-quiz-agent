@@ -1,12 +1,128 @@
 [
-  {"type":"input","question":"Solve: 3x + 7 = 28. What is x?","answer":"7","explanation":"Subtract 7 from both sides: 3x = 21. Divide by 3: x = 7."},
-  {"type":"input","question":"Find 15% of 240.","answer":"36","explanation":"15% of 240 is 36."},
-  {"type":"mcq","question":"Which expression is equivalent to 4(2x + 3)?","options":["8x + 3","6x + 12","8x + 12","4x + 6"],"answer":"8x + 12","explanation":"Distribute 4 to both terms."},
-  {"type":"input","question":"A triangle has angles 55 and 65 degrees. What is the third angle?","answer":"60","explanation":"180 - 55 - 65 = 60."},
-  {"type":"input","question":"Simplify: 2^3 x 2^4","answer":"128","explanation":"2^3 x 2^4 = 2^7 = 128."},
-  {"type":"mcq","question":"What is the slope of y = 5x - 2?","options":["-2","2","5","-5"],"answer":"5","explanation":"In y = mx + b, m is the slope."},
-  {"type":"input","question":"Find the area of a circle with radius 7 cm. Use pi = 22/7.","answer":"154","explanation":"Area = pi r squared = 154."},
-  {"type":"input","question":"A box has 5 red, 3 blue, and 2 green balls. What is the probability of choosing a blue ball? Write as a fraction.","answer":"3/10","explanation":"3 blue out of 10 total balls = 3/10."},
-  {"type":"input","question":"Solve: 5y - 9 = 31. What is y?","answer":"8","explanation":"Add 9 to both sides: 5y = 40. Divide by 5: y = 8."},
-  {"type":"mcq","question":"Which number is irrational?","options":["0.75","square root of 49","pi","3/8"],"answer":"pi","explanation":"Pi is irrational."}
+  {
+    "type": "input",
+    "question": "Solve: 2x + 5 = 17. What is x?",
+    "answer": "6",
+    "explanation": "Subtract 5 from both sides: 2x = 12. Divide by 2: x = 6."
+  },
+  {
+    "type": "input",
+    "question": "Solve: 4a - 9 = 23. What is a?",
+    "answer": "8",
+    "explanation": "Add 9 to both sides: 4a = 32. Divide by 4: a = 8."
+  },
+  {
+    "type": "mcq",
+    "question": "Which expression is equivalent to 3(2x + 7)?",
+    "options": ["6x + 7", "5x + 21", "6x + 21", "3x + 14"],
+    "answer": "6x + 21",
+    "explanation": "Use the distributive property: 3 times 2x is 6x, and 3 times 7 is 21."
+  },
+  {
+    "type": "input",
+    "question": "Simplify: 5x + 3x - 2.",
+    "answer": "8x-2",
+    "explanation": "Combine like terms: 5x + 3x = 8x. The simplified expression is 8x - 2."
+  },
+  {
+    "type": "input",
+    "question": "Simplify: 7y - 2y + 10.",
+    "answer": "5y+10",
+    "explanation": "Combine like terms: 7y - 2y = 5y. The simplified expression is 5y + 10."
+  },
+  {
+    "type": "mcq",
+    "question": "What is the value of 3x - 4 when x = 6?",
+    "options": ["10", "14", "18", "22"],
+    "answer": "14",
+    "explanation": "Substitute x = 6: 3 times 6 minus 4 = 18 - 4 = 14."
+  },
+  {
+    "type": "input",
+    "question": "Evaluate 2p + 9 when p = 8.",
+    "answer": "25",
+    "explanation": "Substitute p = 8: 2 times 8 + 9 = 16 + 9 = 25."
+  },
+  {
+    "type": "input",
+    "question": "Solve: x/3 + 4 = 10. What is x?",
+    "answer": "18",
+    "explanation": "Subtract 4 from both sides: x/3 = 6. Multiply by 3: x = 18."
+  },
+  {
+    "type": "mcq",
+    "question": "Which expression represents 'five more than twice a number n'?",
+    "options": ["5n + 2", "2n + 5", "2(n + 5)", "n/2 + 5"],
+    "answer": "2n + 5",
+    "explanation": "Twice a number n is 2n. Five more means add 5, so the expression is 2n + 5."
+  },
+  {
+    "type": "input",
+    "question": "Solve: 6m = 42. What is m?",
+    "answer": "7",
+    "explanation": "Divide both sides by 6: m = 7."
+  },
+  {
+    "type": "input",
+    "question": "Solve: 9 - x = 2. What is x?",
+    "answer": "7",
+    "explanation": "9 - x = 2 means x must be 7 because 9 - 7 = 2."
+  },
+  {
+    "type": "mcq",
+    "question": "Which is the first step to solve 5x + 6 = 31?",
+    "options": ["Add 6", "Subtract 6", "Divide by 5", "Multiply by 5"],
+    "answer": "Subtract 6",
+    "explanation": "Undo addition first. Subtract 6 from both sides to get 5x = 25."
+  },
+  {
+    "type": "input",
+    "question": "Solve: 3(x + 2) = 21. What is x?",
+    "answer": "5",
+    "explanation": "Divide both sides by 3: x + 2 = 7. Subtract 2: x = 5."
+  },
+  {
+    "type": "input",
+    "question": "Simplify: 4(3x - 2).",
+    "answer": "12x-8",
+    "explanation": "Distribute 4: 4 times 3x is 12x, and 4 times -2 is -8."
+  },
+  {
+    "type": "mcq",
+    "question": "What is the coefficient in the term -7x?",
+    "options": ["7", "-7", "x", "0"],
+    "answer": "-7",
+    "explanation": "The coefficient is the number multiplying the variable. In -7x, the coefficient is -7."
+  },
+  {
+    "type": "input",
+    "question": "Solve: x - 12 = -3. What is x?",
+    "answer": "9",
+    "explanation": "Add 12 to both sides: x = 9."
+  },
+  {
+    "type": "input",
+    "question": "Solve: 2x - 3 = x + 8. What is x?",
+    "answer": "11",
+    "explanation": "Subtract x from both sides: x - 3 = 8. Add 3: x = 11."
+  },
+  {
+    "type": "mcq",
+    "question": "Which expression is simplified correctly?",
+    "options": ["2x + 3x = 5x", "2x + 3 = 5x", "x + x = x", "4x - x = 4"],
+    "answer": "2x + 3x = 5x",
+    "explanation": "Only like terms can be combined. 2x + 3x = 5x is correct."
+  },
+  {
+    "type": "input",
+    "question": "A number increased by 9 is 26. Let the number be x. Solve for x.",
+    "answer": "17",
+    "explanation": "The equation is x + 9 = 26. Subtract 9 from both sides: x = 17."
+  },
+  {
+    "type": "input",
+    "question": "The expression 4x + 3 has a value of 35. What is x?",
+    "answer": "8",
+    "explanation": "Set 4x + 3 = 35. Subtract 3: 4x = 32. Divide by 4: x = 8."
+  }
 ]
