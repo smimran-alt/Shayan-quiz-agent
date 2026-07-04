@@ -1,0 +1,22 @@
+[
+  {"type":"input","question":"Solve: 2x + 5 = 17. What is x?","answer":"6","explanation":"Subtract 5: 2x = 12. Divide by 2: x = 6."},
+  {"type":"input","question":"Solve: 4a - 9 = 23. What is a?","answer":"8","explanation":"Add 9: 4a = 32. Divide by 4: a = 8."},
+  {"type":"mcq","question":"Which expression is equivalent to 3(2x + 7)?","options":["6x + 7","5x + 21","6x + 21","3x + 14"],"answer":"6x + 21","explanation":"Distribute 3 to both terms: 6x + 21."},
+  {"type":"input","question":"Simplify: 5x + 3x - 2.","answer":"8x-2","explanation":"Combine like terms: 5x + 3x = 8x."},
+  {"type":"input","question":"Simplify: 7y - 2y + 10.","answer":"5y+10","explanation":"Combine like terms: 7y - 2y = 5y."},
+  {"type":"mcq","question":"What is the value of 3x - 4 when x = 6?","options":["10","14","18","22"],"answer":"14","explanation":"3 times 6 minus 4 = 14."},
+  {"type":"input","question":"Evaluate 2p + 9 when p = 8.","answer":"25","explanation":"2 times 8 plus 9 = 25."},
+  {"type":"input","question":"Solve: x/3 + 4 = 10. What is x?","answer":"18","explanation":"Subtract 4: x/3 = 6. Multiply by 3: x = 18."},
+  {"type":"mcq","question":"Which expression represents five more than twice a number n?","options":["5n + 2","2n + 5","2(n + 5)","n/2 + 5"],"answer":"2n + 5","explanation":"Twice n is 2n. Five more is +5."},
+  {"type":"input","question":"Solve: 6m = 42. What is m?","answer":"7","explanation":"Divide by 6: m = 7."},
+  {"type":"input","question":"Solve: 9 - x = 2. What is x?","answer":"7","explanation":"9 - 7 = 2, so x = 7."},
+  {"type":"mcq","question":"Which is the first step to solve 5x + 6 = 31?","options":["Add 6","Subtract 6","Divide by 5","Multiply by 5"],"answer":"Subtract 6","explanation":"Undo addition first by subtracting 6 from both sides."},
+  {"type":"input","question":"Solve: 3(x + 2) = 21. What is x?","answer":"5","explanation":"Divide by 3: x + 2 = 7. Subtract 2: x = 5."},
+  {"type":"input","question":"Simplify: 4(3x - 2).","answer":"12x-8","explanation":"Distribute 4: 12x - 8."},
+  {"type":"mcq","question":"What is the coefficient in the term -7x?","options":["7","-7","x","0"],"answer":"-7","explanation":"The coefficient is the number multiplying x."},
+  {"type":"input","question":"Solve: x - 12 = -3. What is x?","answer":"9","explanation":"Add 12 to both sides: x = 9."},
+  {"type":"input","question":"Solve: 2x - 3 = x + 8. What is x?","answer":"11","explanation":"Subtract x: x - 3 = 8. Add 3: x = 11."},
+  {"type":"mcq","question":"Which expression is simplified correctly?","options":["2x + 3x = 5x","2x + 3 = 5x","x + x = x","4x - x = 4"],"answer":"2x + 3x = 5x","explanation":"Only like terms can be combined."},
+  {"type":"input","question":"A number increased by 9 is 26. Let the number be x. Solve for x.","answer":"17","explanation":"x + 9 = 26, so x = 17."},
+  {"type":"input","question":"The expression 4x + 3 has a value of 35. What is x?","answer":"8","explanation":"4x + 3 = 35. Subtract 3 and divide by 4."}
+]
